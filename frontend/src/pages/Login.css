@@ -1,0 +1,251 @@
+/* Login Page SaaS styling */
+
+.login-matrix {
+    display: flex;
+    min-height: 100vh;
+    width: 100vw;
+    background: #0B1C2C;
+    /* Deep Navy Background */
+}
+
+/* Left Graphic Panel */
+.login-graphic-panel {
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4rem;
+    background: linear-gradient(135deg, #0B1C2C 0%, #0F2A4A 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+@media (min-width: 900px) {
+    .login-graphic-panel {
+        display: flex;
+    }
+}
+
+.logo-vertical h1 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.logo-vertical p {
+    color: #60A5FA;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+.graphic-features {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.graphic-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #E5E7EB;
+}
+
+.g-icon {
+    background: #1E40AF;
+    padding: 0.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Right Interactive Panel */
+.login-interactive-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: #FFFFFF;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 440px;
+}
+
+.login-card h2 {
+    font-size: 2rem;
+    color: #111827;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.login-subtitle {
+    color: #6B7280;
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.login-error-flag {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #FEF2F2;
+    color: #DC2626;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #DC2626;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.label-row label {
+    margin: 0;
+}
+
+.forgot-pwd {
+    font-size: 0.85rem;
+    color: #2563EB;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    color: #9CA3AF;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 0.85rem 1rem 0.85rem 3rem;
+    background: #F9FAFB;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #111827;
+    transition: all 0.2s;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: #3B82F6;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.login-submit-btn {
+    width: 100%;
+    background: #0B1C2C;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 1rem;
+}
+
+.login-submit-btn:hover {
+    background: #1E3A8A;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.25);
+}
+
+.login-submit-btn.loading {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.login-footer {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.login-footer p {
+    color: #6B7280;
+    font-size: 0.95rem;
+}
+
+.login-footer a {
+    color: #2563EB;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.test-credentials {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #F3F4F6;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #4B5563;
+    text-align: left;
+    border: 1px dashed #D1D5DB;
+}
+
+.test-credentials code {
+    background: #E5E7EB;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

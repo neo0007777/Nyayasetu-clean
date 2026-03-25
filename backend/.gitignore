@@ -1,0 +1,15 @@
+
+venv/
+__pycache__/
+*.pyc
+chroma_db/
+*.db
+.env
+data/
+*.egg-info/
+dist/
+build/
+.DS_Store
+backend/qdrant_db/
+chroma_db/
+nyayasetu.db

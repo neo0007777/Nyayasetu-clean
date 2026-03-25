@@ -1,0 +1,574 @@
+/* Premium Multi-Party Matrix Analyzer CSS */
+
+.conflict-workspace-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    font-family: var(--font-main);
+    background: #F3F4F6;
+    /* Global canvas background */
+}
+
+/* =========================================
+   HEADER
+========================================= */
+.conflict-header-premium {
+    background: #ffffff;
+    padding: 3rem 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    border-bottom: 1px solid #E5E7EB;
+    z-index: 10;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.header-icon-wrapper {
+    background: #F0FdfA;
+    /* Very light teal/blue */
+    padding: 1.25rem;
+    border-radius: 16px;
+    color: #1E40AF;
+    box-shadow: 0 4px 15px rgba(30, 64, 175, 0.08);
+    /* Blue shadow */
+}
+
+.header-text-block h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0B1C2C;
+    /* NyayaSetu Navy */
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.header-text-block p {
+    font-size: 1.1rem;
+    color: #4B5563;
+    line-height: 1.6;
+    max-width: 800px;
+}
+
+/* =========================================
+   MAIN CONTENT AREA (SCROLLABLE)
+========================================= */
+.conflict-main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 3rem 4rem;
+}
+
+/* 1. UPLOAD MATRIX */
+.upload-matrix-stage {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.party-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.party-card-premium {
+    background: #ffffff;
+    border-radius: 16px;
+    /* rounded-xl */
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    /* Premium soft dropshadow */
+    border: 1px solid #E5E7EB;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s;
+}
+
+.party-card-premium:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.party-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.party-name-input {
+    flex: 1;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #0B1C2C;
+    /* Dark dominant text */
+    padding: 0.5rem 0;
+    background: transparent;
+    outline: none;
+    transition: border-bottom-color 0.2s;
+}
+
+.party-name-input:focus {
+    border-bottom-color: #1E40AF;
+    /* NyayaSetu Blue */
+}
+
+.remove-party-btn {
+    background: #FEF2F2;
+    color: #DC2626;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.remove-party-btn:hover {
+    background: #FEE2E2;
+    transform: scale(1.1);
+}
+
+.party-upload-zone {
+    border: 2px dashed #D1D5DB;
+    border-radius: 12px;
+    padding: 2.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    background: #F9FAFB;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    margin-bottom: 1.5rem;
+}
+
+.party-upload-zone:hover {
+    border-color: #3B82F6;
+    /* Bright blue tint */
+    background: #F0FdfA;
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+.upload-icon-faded {
+    color: #9CA3AF;
+    margin: 0 auto 1rem;
+    transition: color 0.2s;
+}
+
+.party-upload-zone:hover .upload-icon-faded {
+    color: #3B82F6;
+}
+
+.party-upload-zone p {
+    color: #111827;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.upload-subtext {
+    font-size: 0.75rem;
+    color: #6B7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.party-files-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+    /* Stretch to fill bottom */
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.uploaded-file-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #ffffff;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+.file-name-truncate {
+    flex: 1;
+    font-size: 0.9rem;
+    color: #374151;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.remove-file-btn {
+    background: transparent;
+    border: none;
+    color: #9CA3AF;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.remove-file-btn:hover {
+    background: #FEF2F2;
+    color: #DC2626;
+}
+
+/* Control Strip */
+.matrix-controls-strip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.add-party-ghost-btn {
+    background: transparent;
+    border: 2px dashed #9CA3AF;
+    color: #4B5563;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.add-party-ghost-btn:hover {
+    border-color: #1E40AF;
+    color: #1E40AF;
+    background: rgba(30, 64, 175, 0.05);
+}
+
+.analyze-matrix-btn {
+    background: #0B1C2C;
+    /* Massive Deep Navy Primary CTA */
+    color: white;
+    border: none;
+    padding: 1.5rem 4rem;
+    border-radius: 16px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(11, 28, 44, 0.2);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.analyze-matrix-btn.active:hover {
+    background: #1e3a8a;
+    /* Shift to blue */
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(11, 28, 44, 0.3);
+}
+
+.analyze-matrix-btn.disabled {
+    background: #D1D5DB;
+    color: #9CA3AF;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+
+/* 2. LOADING MATRIX STAGE */
+.matrix-loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+}
+
+.spinner-ring {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 50%;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    /* Elevated spinner */
+    margin-bottom: 2rem;
+}
+
+.matrix-loading-state h3 {
+    font-size: 1.75rem;
+    color: #0B1C2C;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.loading-stage-text {
+    color: #6B7280;
+    font-size: 1.15rem;
+    transition: opacity 0.3s;
+    animation: pulse 1.5s infinite;
+    text-align: center;
+    max-width: 600px;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+
+/* 3. M-TO-N RESULTS STAGE */
+.matrix-results-stage {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.results-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.results-header-actions h3 {
+    font-size: 1.6rem;
+    color: #0B1C2C;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+}
+
+.reset-matrix-btn {
+    background: #ffffff;
+    border: 1px solid #D1D5DB;
+    color: #374151;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+.reset-matrix-btn:hover {
+    background: #F9FAFB;
+    border-color: #9CA3AF;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+}
+
+.results-metrics-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.metric-box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    border: 1px solid #E5E7EB;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #0B1C2C;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.metric-label {
+    font-size: 0.85rem;
+    color: #6B7280;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.conflicts-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-bottom: 4rem;
+}
+
+.conflict-result-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.conflict-result-header {
+    background: #F8FAFC;
+    padding: 1.25rem 2rem;
+    border-bottom: 1px solid #E5E7EB;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.conflict-party-badge {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0B1C2C;
+}
+
+.severity-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-high {
+    background: #FEF2F2;
+    color: #DC2626;
+    border: 1px solid #FCA5A5;
+}
+
+.badge-medium {
+    background: #FFFBEB;
+    color: #D97706;
+    border: 1px solid #FCD34D;
+}
+
+.badge-low {
+    background: #EFF6FF;
+    color: #2563EB;
+    border: 1px solid #93C5FD;
+}
+
+.conflict-clauses-split {
+    display: flex;
+    align-items: stretch;
+    padding: 2rem;
+    gap: 1.5rem;
+}
+
+.clause-box {
+    flex: 1;
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.clause-box.red-tint {
+    background: #FEF2F2;
+    border-color: #FCA5A5;
+}
+
+.clause-source-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #6B7280;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.clause-text {
+    font-size: 1.05rem;
+    color: #111827;
+    line-height: 1.6;
+    font-family: 'Times New Roman', Times, serif;
+    /* Match legal text */
+}
+
+.clause-divider-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.conflict-implication-box {
+    background: #0B1C2C;
+    /* Deep NyayaSetu Navy insight box */
+    margin: 0 2rem 2rem 2rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    color: #ffffff;
+}
+
+.conflict-implication-box h4 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #93C5FD;
+    /* Bright blue accent */
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+}
+
+.conflict-implication-box p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1024px) {
+    .conflict-clauses-split {
+        flex-direction: column;
+    }
+
+    .clause-divider-icon {
+        transform: rotate(90deg);
+    }
+}

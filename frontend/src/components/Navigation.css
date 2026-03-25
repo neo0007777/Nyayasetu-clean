@@ -1,0 +1,315 @@
+/* Sidebar Layout */
+.sidebar-nav {
+    width: 280px;
+    height: 100vh;
+    background-color: #0B1C2C;
+    /* Deep Navy from our palette */
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #1f2937;
+    flex-shrink: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid #1f2937;
+    margin-bottom: 1.5rem;
+}
+
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    background: #ffffff;
+    color: #0B1C2C;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-text {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-text h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin: 0;
+    font-family: var(--font-heading);
+    color: #ffffff;
+}
+
+.badge {
+    background: #1E40AF;
+    font-size: 0.65rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-section {
+    padding: 0 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 0.75rem;
+    color: #9CA3AF;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #D1D5DB;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+}
+
+.nav-link.active {
+    background: #1E40AF;
+    color: #ffffff;
+    box-shadow: inset 3px 0 0 #60A5FA;
+}
+
+.mt-auto {
+    margin-top: auto;
+}
+
+.recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.recent-item {
+    font-size: 0.85rem;
+    color: #9CA3AF;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0.25rem 0;
+}
+
+.recent-item:hover {
+    color: #ffffff;
+}
+
+.sidebar-footer {
+    padding: 1.5rem;
+    border-top: 1px solid #1f2937;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================================
+   DYNAMIC AUTH PROFILE STYLES
+========================================= */
+
+/* The Clickable User Block */
+.dynamic-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dynamic-user-profile:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dynamic-user-profile .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dynamic-user-profile .user-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.dynamic-user-profile .user-info strong {
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dynamic-user-profile .user-info span {
+    color: #9CA3AF;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+/* Floating SaaS Settings Dropdown */
+.authenticated-user-container {
+    position: relative;
+    width: 100%;
+}
+
+.profile-dropdown {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-user-header {
+    padding: 0.75rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-user-header strong {
+    color: #111827;
+    font-size: 0.95rem;
+}
+
+.dropdown-user-header span {
+    color: #6B7280;
+    font-size: 0.8rem;
+    margin-top: 2px;
+}
+
+.dropdown-divider {
+    height: 1px;
+    width: 100%;
+    background: #E5E7EB;
+    margin: 0.5rem 0;
+}
+
+.dropdown-action {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 0.5rem;
+    border: none;
+    background: transparent;
+    color: #374151;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dropdown-action:hover {
+    background: #F3F4F6;
+    color: #111827;
+}
+
+.dropdown-action.text-red-600 {
+    color: #DC2626;
+}
+
+.dropdown-action.text-red-600:hover {
+    background: #FEF2F2;
+    color: #991B1B;
+}
+
+/* Unauthenticated State */
+.massive-login-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: #ffffff;
+    color: #0B1C2C;
+    border: none;
+    padding: 1rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+.massive-login-btn:hover {
+    background: #E5E7EB;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+}
+
+/* Animations */
+.animate-fade-up {
+    animation: fadeUp 0.25s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    transform-origin: bottom center;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
