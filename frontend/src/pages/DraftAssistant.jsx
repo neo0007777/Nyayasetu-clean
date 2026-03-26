@@ -3,7 +3,8 @@ import {
     FileText, Wand2, RotateCcw, Download, Copy, RefreshCw, Edit3,
     Sparkles, CornerDownRight, Check, Loader2, ShieldAlert, AlertOctagon,
     Scale, BookmarkMinus, Briefcase, Users, Lock, FileSignature,
-    UploadCloud, X, AlertTriangle, ListChecks, ArrowRightCircle
+    UploadCloud, X, AlertTriangle, ListChecks, ArrowRightCircle,
+    ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './DraftAssistant.css';
@@ -53,6 +54,8 @@ const DraftAssistant = () => {
     const [sources, setSources] = useState([]);
     const [error, setError] = useState('');
     const [copied, setCopied] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [panelOpen, setPanelOpen] = useState(true);
     const editorRef = useRef(null);
 
     const switchTemplate = (id) => {
@@ -127,8 +130,20 @@ const DraftAssistant = () => {
 
     return (
         <div className="workspace-layout">
-            <aside className="draft-sidebar">
-                <div className="sidebar-header-workspace"><h3>Draft Library</h3></div>
+            <aside className={`draft-sidebar ${sidebarOpen ? '' : 'sidebar-collapsed'}`}>
+                <div className="sidebar-header-workspace">
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        {sidebarOpen && <h3>Draft Library</h3>}
+                        <button
+                            className="panel-toggle-btn"
+                            onClick={() => setSidebarOpen(!sidebarOpen)}
+                            title={sidebarOpen ? 'Collapse library' : 'Expand library'}
+                        >
+                            {sidebarOpen ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
+                        </button>
+                    </div>
+                </div>
+                {sidebarOpen && (
                 <div className="template-list">
                     {TEMPLATE_GROUPS.map((group, gIdx) => (
                         <div key={gIdx} className="sidebar-category-group">
@@ -146,6 +161,7 @@ const DraftAssistant = () => {
                         </div>
                     ))}
                 </div>
+                )}
             </aside>
 
             <main className="editor-area">
@@ -236,11 +252,23 @@ const DraftAssistant = () => {
                 )}
             </main>
 
-            <aside className="ai-insight-panel">
+            <aside className={`ai-insight-panel ${panelOpen ? '' : 'panel-collapsed'}`}>
                 <div className="ai-panel-header">
-                    <Sparkles size={18} className="text-primary" />
-                    <h3>Reference Sources</h3>
+                    <button
+                        className="panel-toggle-btn panel-toggle-btn-right"
+                        onClick={() => setPanelOpen(!panelOpen)}
+                        title={panelOpen ? 'Collapse sources' : 'Expand sources'}
+                    >
+                        {panelOpen ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+                    </button>
+                    {panelOpen && (
+                        <>
+                            <Sparkles size={18} className="text-primary" />
+                            <h3>Reference Sources</h3>
+                        </>
+                    )}
                 </div>
+                {panelOpen && (
                 <div className="ai-suggestions-feed">
                     {!hasGenerated && (
                         <div className="empty-suggestions">
@@ -267,6 +295,7 @@ const DraftAssistant = () => {
                         </p>
                     )}
                 </div>
+                )}
             </aside>
         </div>
     );

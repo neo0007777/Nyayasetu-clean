@@ -670,7 +670,65 @@
     }
 }
 
-/* Premium DraftAssistant CSS Addition */
+/* ===========================
+   COLLAPSIBLE PANELS
+=========================== */
+.sidebar-collapsed {
+    width: 56px !important;
+    min-width: 56px !important;
+    overflow: hidden;
+}
+
+.panel-collapsed {
+    width: 56px !important;
+    min-width: 56px !important;
+    overflow: hidden;
+}
+
+.panel-toggle-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #94A3B8;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.panel-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+.panel-toggle-btn-right {
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
+    color: #64748B;
+}
+
+.panel-toggle-btn-right:hover {
+    background: #E2E8F0;
+    color: #0B1C2C;
+}
+
+.sidebar-collapsed .sidebar-header-workspace,
+.panel-collapsed .ai-panel-header {
+    justify-content: center;
+    padding: 1.5rem 0;
+}
+
+/* Smooth width transition */
+.draft-sidebar,
+.ai-insight-panel {
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
 .custom-upload-wrapper {
     animation: fadeIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }

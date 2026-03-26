@@ -5,49 +5,74 @@ import re
 
 def find_contradictions(document_a: str, document_b: str) -> dict:
     system_prompt = """You are an expert Indian legal analyst specializing in contract review.
-Your task is to compare two legal documents and identify every contradiction, conflict, or incompatibility between them.
+Compare two legal documents and identify every contradiction, conflict, or incompatibility.
 
-For each contradiction found, provide:
-1. The specific clause or topic
-2. What Party A's document says
-3. What Party B's document says
-4. A practical suggested resolution
-
-Respond ONLY in this exact JSON format with no text before or after:
+You MUST respond ONLY with a valid JSON object. No text before or after. No markdown. No explanation.
+Use exactly this format:
 {
-  "total_contradictions": <number>,
-  "overall_compatibility": "<High/Medium/Low> - one line explanation",
+  "total_contradictions": 2,
+  "overall_compatibility": "Low - multiple conflicts found",
   "contradictions": [
     {
-      "clause": "<topic or clause name>",
-      "party_a_position": "<what document A says>",
-      "party_b_position": "<what document B says>",
-      "suggested_resolution": "<how to resolve this conflict>"
+      "clause": "Termination Notice Period",
+      "party_a_position": "30 days written notice required",
+      "party_b_position": "90 days notice required per addendum",
+      "suggested_resolution": "Adopt the longer 90-day period to protect both parties"
     }
   ]
-}"""
+}
 
-    user_message = f"""Compare these two legal documents and identify all contradictions:
+If no contradictions exist, return:
+{"total_contradictions": 0, "overall_compatibility": "High - documents are compatible", "contradictions": []}"""
+
+    user_message = f"""Find ALL contradictions between these two documents:
 
 === DOCUMENT A ===
-{document_a[:4000]}
+{document_a[:5000]}
 
 === DOCUMENT B ===
-{document_b[:4000]}
+{document_b[:5000]}
 
-Return only the JSON response."""
+Return ONLY the JSON object. Nothing else."""
 
     raw = call_llm(system_prompt, user_message)
+    print(f"[Contradiction] Raw LLM response: {raw[:500]}")
 
+    # Try multiple JSON extraction strategies
+    # Strategy 1: Direct parse
     try:
-        json_match = re.search(r'\{.*\}', raw, re.DOTALL)
+        return json.loads(raw.strip())
+    except Exception:
+        pass
+
+    # Strategy 2: Extract JSON block
+    try:
+        json_match = re.search(r'\{[\s\S]*\}', raw)
         if json_match:
             return json.loads(json_match.group())
-    except Exception as e:
-        print(f"[Contradiction] JSON parse error: {e}")
+    except Exception:
+        pass
 
+    # Strategy 3: Find JSON after any text
+    try:
+        start = raw.find('{')
+        end = raw.rfind('}') + 1
+        if start != -1 and end > start:
+            return json.loads(raw[start:end])
+    except Exception as e:
+        print(f"[Contradiction] All parse strategies failed: {e}")
+        print(f"[Contradiction] Full raw response: {raw}")
+
+    # Fallback: manually build response from text
     return {
-        "total_contradictions": 0,
-        "overall_compatibility": "Unable to analyze — please try again",
-        "contradictions": []
+        "total_contradictions": 1,
+        "overall_compatibility": "Unable to parse structured response - manual review needed",
+        "contradictions": [
+            {
+                "clause": "AI Analysis",
+                "party_a_position": "See raw analysis",
+                "party_b_position": raw[:500] if raw else "No response",
+                "suggested_resolution": "Please review documents manually"
+            }
+        ]
     }

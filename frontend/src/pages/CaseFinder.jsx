@@ -33,7 +33,18 @@ const CaseFinder = () => {
 
     const handleSearch = async (e) => {
         if (e) e.preventDefault();
-        if (!searchQuery.trim()) return;
+        await handleSearchWithQuery(searchQuery);
+    };
+
+    const triggerSearch = (query) => {
+        setSearchQuery(query);
+        setTimeout(() => {
+            handleSearchWithQuery(query);
+        }, 0);
+    };
+
+    const handleSearchWithQuery = async (query) => {
+        if (!query.trim()) return;
 
         setIsSearching(true);
         setHasSearched(false);
@@ -46,7 +57,7 @@ const CaseFinder = () => {
             const response = await fetch('/api/cases/search', {
                 method: 'POST',
                 headers: getAuthHeaders(),
-                body: JSON.stringify({ query: searchQuery, n_results: 5 }),
+                body: JSON.stringify({ query, n_results: 5 }),
             });
 
             if (!response.ok) {
@@ -64,13 +75,6 @@ const CaseFinder = () => {
         } finally {
             setIsSearching(false);
         }
-    };
-
-    const triggerSearch = (query) => {
-        setSearchQuery(query);
-        setTimeout(() => {
-            document.querySelector('.advanced-search-bar')?.dispatchEvent(new Event('submit', { bubbles: true }));
-        }, 100);
     };
 
     return (
@@ -192,8 +196,8 @@ const CaseFinder = () => {
                                         {liveCases.map((c, i) => (
                                             <div key={i} className="case-card glass-panel">
                                                 <div className="case-card-header">
-                                                    <h3>{c.title}</h3>
-                                                    <a
+                                                    <h3>{c.title}</h3>\n                                                    <a
+                                                    
                                                         href={c.link}
                                                         target="_blank"
                                                         rel="noopener noreferrer"

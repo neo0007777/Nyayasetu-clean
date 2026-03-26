@@ -56,7 +56,9 @@ STRICT RULES:
 - Include NOW THEREFORE clause
 - End with proper execution block (signatures, witnesses, notary)
 - Do not leave any section incomplete or vague
-- The document must be ready to use after filling in placeholders"""
+- The document must be ready to use after filling in placeholders
+- Always cite 2-3 real landmark Indian Supreme Court or High Court cases relevant to the document type
+- Use actual case names, year, and citation (e.g. Arnesh Kumar v. State of Bihar (2014) 8 SCC 273)"""
 
     user_message = f"""Draft Request: {req.description}
 {f"Document Category: {req.category}" if req.category else ""}
