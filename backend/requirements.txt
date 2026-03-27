@@ -40,3 +40,5 @@ tqdm==4.66.4
 # Build fixes
 setuptools
 wheel
+
+sentence-transformers==2.7.0
