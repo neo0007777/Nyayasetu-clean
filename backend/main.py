@@ -35,14 +35,7 @@ scheduler = BackgroundScheduler()
 def on_startup():
     create_tables()
     print("[NyayaSetu] Database tables ready.")
-
-    db = SessionLocal()
-    try:
-        refresh_compliance_alerts(db)
-    except Exception as e:
-        print(f"[NyayaSetu] Compliance refresh skipped: {e}")
-    finally:
-        db.close()
+    print("[NyayaSetu] Server ready.")
 
     def scheduled_refresh():
         db = SessionLocal()
