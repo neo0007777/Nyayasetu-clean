@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://nyayasetu-clean-tm7p.onrender.com/:path*"
+    }
+  ]
+}
