@@ -8,7 +8,7 @@ from qdrant_client.models import (
 )
 from utils.document_loader import load_all_documents
 
-QDRANT_PATH = os.getenv("CHROMA_DB_PATH", "./qdrant_db")
+QDRANT_PATH = os.getenv("QDRANT_PATH", "./qdrant_db")
 DRAFTS_DATA_PATH = os.getenv("DRAFTS_DATA_PATH", "../data/drafts")
 COLLECTION_NAME = "nyayasetu_legal_docs"
 VECTOR_SIZE = 384

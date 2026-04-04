@@ -40,6 +40,11 @@ def call_llm(system_prompt: str, user_message: str) -> str:
             return call_groq(system_prompt, user_message)
         except Exception as e:
             print(f"[LLM] Groq failed: {e}")
-            raise RuntimeError(f"Groq failed: {e}. Please try again later.")
 
-    raise RuntimeError("No LLM configured. Set GROQ_API_KEY environment variable.")
+    # Try Ollama as local fallback
+    try:
+        return call_ollama(system_prompt, user_message)
+    except Exception as e:
+        print(f"[LLM] Ollama failed: {e}")
+
+    return "⚠️ AI service temporarily unavailable. Please try again."
