@@ -10,7 +10,7 @@
 NyayaSetu is a free, open-source legal AI platform built for Indian legal professionals. It helps advocates and interns:
 
 - **Find real cases** — Search actual Indian court judgments with proper citations
-- **Draft documents** — Generate error-free legal drafts from a library of 1800+ templates
+- **Draft documents** — Generate error-free legal drafts from a library of 1841 templates
 - **Get legal guidance** — Article-backed Q&A for common legal questions
 
 No hallucinations. No guesswork. Every answer is grounded in real legal data.
