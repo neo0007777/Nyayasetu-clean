@@ -8,16 +8,13 @@ import './ClauseConflict.css';
 
 const ClauseConflict = () => {
     const { getAuthHeaders } = useAuth();
-
     const [parties, setParties] = useState([
         { id: 'party-1', name: 'Party 1', files: [], content: '' },
         { id: 'party-2', name: 'Party 2', files: [], content: '' },
     ]);
-
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [analysisResults, setAnalysisResults] = useState(null);
     const [error, setError] = useState('');
-
     const fileInputRefs = useRef({});
 
     const handleAddParty = () => {
@@ -39,7 +36,7 @@ const ClauseConflict = () => {
             const reader = new FileReader();
             reader.onload = (e) => resolve(e.target.result);
             reader.onerror = reject;
-            reader.readAsText(file);
+            reader.readAsText(file, 'utf-8');
         });
     };
 
@@ -60,7 +57,6 @@ const ClauseConflict = () => {
                     size: (file.size / 1024).toFixed(1) + ' KB',
                 });
             } catch {
-                combinedContent += `\n\n=== ${file.name} === [Binary file - text extraction not available]`;
                 mappedFiles.push({
                     id: `file-${Date.now()}-${Math.random()}`,
                     name: file.name,
@@ -86,7 +82,13 @@ const ClauseConflict = () => {
         }));
     };
 
-    const validParties = parties.filter(p => p.files.length > 0 && p.content);
+    const updatePartyContent = (partyId, text) => {
+        setParties(parties.map(p =>
+            p.id === partyId ? { ...p, content: text } : p
+        ));
+    };
+
+    const validParties = parties.filter(p => p.content && p.content.trim().length > 20);
     const canAnalyze = validParties.length >= 2;
 
     const triggerConflictAnalysis = async () => {
@@ -119,19 +121,13 @@ const ClauseConflict = () => {
         }
     };
 
-    const getSeverityBadgeClass = (level) => {
-        if (level === 'High') return 'badge-high';
-        if (level === 'Medium') return 'badge-medium';
-        return 'badge-low';
-    };
-
     return (
         <div className="conflict-workspace-layout">
             <header className="conflict-header-premium">
                 <div className="header-icon-wrapper"><ShieldAlert size={28} className="text-primary" /></div>
                 <div className="header-text-block">
                     <h2>Multi-Party Contract Analyzer</h2>
-                    <p>Upload documents from each party. AI will detect contradictions, liability conflicts, and jurisdictional disputes instantly.</p>
+                    <p>Upload a TXT file or paste contract text directly. AI will detect contradictions, liability conflicts, and jurisdictional disputes instantly.</p>
                 </div>
             </header>
 
@@ -139,11 +135,10 @@ const ClauseConflict = () => {
                 {!isAnalyzing && !analysisResults && (
                     <div className="upload-matrix-stage animate-fade-in">
                         {error && (
-                            <div style={{ padding: '0.75rem', background: '#fee2e2', borderRadius: '6px', color: '#991b1b', marginBottom: '1rem' }}>
+                            <div className="error-banner">
                                 {error}
                             </div>
                         )}
-
                         <div className="party-cards-grid">
                             {parties.map((party) => (
                                 <div key={party.id} className="party-card-premium">
@@ -166,15 +161,27 @@ const ClauseConflict = () => {
                                         <input
                                             type="file"
                                             multiple
-                                            accept=".txt,.docx,.doc,.rtf,.pdf"
+                                            accept=".txt"
                                             className="hidden-file-input"
                                             ref={(el) => fileInputRefs.current[party.id] = el}
                                             onChange={(e) => handleFileUpload(e, party.id)}
                                         />
                                         <UploadCloud size={32} className="upload-icon-faded" />
-                                        <p>Click to browse documents</p>
-                                        <span className="upload-subtext">TXT, DOCX, RTF accepted</span>
+                                        <p>Click to upload a TXT file</p>
+                                        <span className="upload-subtext">Plain text files only (.txt)</span>
                                     </div>
+
+                                    <div className="paste-divider">
+                                        <span>or paste text directly</span>
+                                    </div>
+
+                                    <textarea
+                                        className="party-text-input"
+                                        placeholder="Paste contract text here..."
+                                        value={party.content}
+                                        onChange={(e) => updatePartyContent(party.id, e.target.value)}
+                                        rows={6}
+                                    />
 
                                     {party.files.length > 0 && (
                                         <div className="party-files-list">
@@ -209,7 +216,7 @@ const ClauseConflict = () => {
                                 <Sparkles size={20} />
                                 {canAnalyze
                                     ? `Analyze ${validParties.length} Parties`
-                                    : 'Upload files to at least 2 parties'}
+                                    : 'Add text to at least 2 parties'}
                             </button>
                         </div>
                     </div>
@@ -246,7 +253,9 @@ const ClauseConflict = () => {
                             </div>
                             <div className="metric-box">
                                 <span className="metric-value text-red-600">
-                                    {analysisResults.contradictions.filter(c => c.clause?.toLowerCase().includes('high') || c.suggested_resolution?.length > 100).length}
+                                    {analysisResults.contradictions.filter(c =>
+                                        c.suggested_resolution?.length > 100
+                                    ).length}
                                 </span>
                                 <span className="metric-label">Need Attention</span>
                             </div>
@@ -267,11 +276,10 @@ const ClauseConflict = () => {
                                 <div key={i} className="conflict-result-card">
                                     <div className="conflict-result-header">
                                         <div className="conflict-party-badge">{conflict.clause}</div>
-                                        <div className={`severity-badge badge-high`}>
+                                        <div className="severity-badge badge-high">
                                             <ShieldAlert size={14} /> Contradiction
                                         </div>
                                     </div>
-
                                     <div className="conflict-clauses-split">
                                         <div className="clause-box">
                                             <span className="clause-source-label">Party A Position</span>
@@ -285,7 +293,6 @@ const ClauseConflict = () => {
                                             <p className="clause-text">"{conflict.party_b_position}"</p>
                                         </div>
                                     </div>
-
                                     <div className="conflict-implication-box">
                                         <h4>Suggested Resolution:</h4>
                                         <p>{conflict.suggested_resolution}</p>
