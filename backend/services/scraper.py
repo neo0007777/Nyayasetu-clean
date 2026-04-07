@@ -57,18 +57,21 @@ def scrape_indian_kanoon(query: str, max_results: int = 5) -> list:
     results = []
 
     try:
+        # FIX 1: soup is now parsed INSIDE the with block so response.text
+        # is read before the httpx client closes the connection.
         with httpx.Client(headers=HEADERS, timeout=15, follow_redirects=True) as client:
             response = client.get(url)
             response.raise_for_status()
+            soup = BeautifulSoup(response.text, "html.parser")  # ← moved inside
 
-        soup = BeautifulSoup(response.text, "html.parser")
         found = []
 
-        # Strategy 1: result_title divs
-        title_divs = soup.find_all("div", class_="result_title")
-        if title_divs:
-            for title_div in title_divs[:max_results]:
-                a_tag = title_div.find("a")
+        # FIX 2: Strategy 1 now uses id="res_N" divs — Indian Kanoon's actual
+        # HTML structure. The old class_="result_title" selector never matched.
+        result_divs = soup.find_all("div", id=lambda x: x and x.startswith("res_"))
+        if result_divs:
+            for div in result_divs[:max_results]:
+                a_tag = div.find("a")
                 if not a_tag:
                     continue
                 title = a_tag.get_text(strip=True)
@@ -76,17 +79,14 @@ def scrape_indian_kanoon(query: str, max_results: int = 5) -> list:
                 if not href or len(title) < 5:
                     continue
                 link = BASE_URL + href if href.startswith("/") else href
-                snippet = ""
-                outer = title_div.find_parent("div")
-                if outer:
-                    for cls in ["result_text", "snippet"]:
-                        rt = outer.find("div", class_=cls)
-                        if rt:
-                            snippet = rt.get_text(separator=" ", strip=True)[:400]
-                            break
+                # Snippet lives in a <p> tag inside the result div
+                p_tag = div.find("p")
+                snippet = p_tag.get_text(separator=" ", strip=True)[:400] if p_tag else ""
+                if not snippet:
+                    snippet = div.get_text(separator=" ", strip=True).replace(title, "").strip()[:300]
                 found.append((title, link, snippet))
 
-        # Strategy 2: any /doc/ links if strategy 1 found nothing
+        # Strategy 2: fallback — scan any /doc/ links if strategy 1 found nothing
         if not found:
             seen = set()
             for a_tag in soup.find_all("a", href=lambda h: h and "/doc/" in str(h)):

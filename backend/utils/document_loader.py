@@ -5,9 +5,15 @@ from docx import Document
 
 
 def load_rtf(filepath: str) -> str:
-    with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
-        raw = f.read()
-    return rtf_to_text(raw).strip()
+    # Try cp1252 first (most RTF from Windows), fallback to latin-1
+    for enc in ("cp1252", "latin-1", "utf-8"):
+        try:
+            with open(filepath, "r", encoding=enc) as f:
+                raw = f.read()
+            return rtf_to_text(raw).strip()
+        except (UnicodeDecodeError, Exception):
+            continue
+    return ""
 
 
 def load_docx(filepath: str) -> str:
