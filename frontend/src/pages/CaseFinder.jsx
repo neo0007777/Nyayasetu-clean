@@ -54,10 +54,24 @@ const CaseFinder = () => {
         setJudgementKeywords([]);
 
         try {
+            // Fetch Indian Kanoon via a CORS proxy so the browser can read the HTML.
+            // Direct fetch to indiankanoon.org is blocked by CORS from localhost/Vercel.
+            let ikHtml = '';
+            try {
+                const ikUrl = `https://indiankanoon.org/search/?formInput=${encodeURIComponent(query)}`;
+                const proxiedUrl = `https://corsproxy.io/?url=${encodeURIComponent(ikUrl)}`;
+                const ikRes = await fetch(proxiedUrl);
+                if (ikRes.ok) {
+                    ikHtml = await ikRes.text();
+                }
+            } catch {
+                // Silently ignore — backend will return empty live_cases
+            }
+
             const response = await fetch('/api/cases/search', {
                 method: 'POST',
                 headers: getAuthHeaders(),
-                body: JSON.stringify({ query, n_results: 5 }),
+                body: JSON.stringify({ query, n_results: 5, ik_html: ikHtml }),
             });
 
             if (!response.ok) {
